@@ -73,7 +73,7 @@
                         <option>Ngừng hợp tác</option> --}}
                         @isset($statusList)
                             @foreach ($statusList as $status)
-                                <option value="{{ $status->id }}  {{ $status->id===$model->status_id ? 'selected' : '' }}">{{ $status->name }}</option>
+                                <option value="{{ $status->id }}"  {{ $status->id===$model->status_id ? 'selected' : '' }}>{{ $status->name }}</option>
                             @endforeach
                         @endisset
                     </select>
@@ -120,25 +120,19 @@
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>Địa chỉ</label>
-                    <textarea name="address" class="form-control" rows="3" value="" placeholder="Nhập địa chỉ">
-                        {{ trim($model->address) }}
-                    </textarea>
+                    <textarea name="address" class="form-control" rows="3" value="" placeholder="Nhập địa chỉ">{{ trim($model->address) }}</textarea>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>Thông tin liên hệ</label>
-                    <textarea name="contact" class="form-control" rows="3" value="" placeholder="Nhập thông tin liên hệ">
-                        {{ trim($model->contact) }}
-                    </textarea>
+                    <textarea name="contact" class="form-control" rows="3" value="" placeholder="Nhập thông tin liên hệ">{{ $model->contact }}</textarea>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>Ghi chú</label>
-                    <textarea name="note" class="form-control" rows="3" value="" placeholder="Nhập ghi chú">
-                        {{ trim($model->note) }}
-                    </textarea>
+                    <textarea name="note" class="form-control" rows="3" value="" placeholder="Nhập ghi chú">{{ $model->note }}</textarea>
                 </div>
             </div>
         </div>

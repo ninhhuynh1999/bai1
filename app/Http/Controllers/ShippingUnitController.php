@@ -55,7 +55,9 @@ class ShippingUnitController extends Controller
     {
 
         $shippingUnit = ShippingUnit::find($id);
-        return view('admin.shipping-unit.edit', ['model' => $shippingUnit]);
+        $statusList = StatusShippingUnit::all();
+
+        return view('admin.shipping-unit.edit', ['model' => $shippingUnit,'statusList'=> $statusList]);
     }
 
 
