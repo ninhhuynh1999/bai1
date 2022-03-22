@@ -1,0 +1,16 @@
+span.text-error{
+    color: red;
+    font-weight: 550;
+}
+
+.link-control{
+    font-size: 25;
+    padding: 3px 3px;
+}
+.link-control i:hover {
+    color: brown;
+}
+
+.table>tbody>tr>td{
+    vertical-align: middle;
+}
