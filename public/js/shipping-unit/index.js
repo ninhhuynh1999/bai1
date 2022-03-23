@@ -21,7 +21,6 @@ btnAdd.addEventListener("click", (e) => {
     addRow();
 });
 
-
 btnSearch.addEventListener("click", () => {
     var data = $("#filter-form").serializeArray();
     for (let index = 0; index < data.length; index += 2) {
@@ -30,10 +29,13 @@ btnSearch.addEventListener("click", () => {
 });
 
 btnAll.addEventListener("click", () => {
-    console.log("reload now");
+    var buttonHidden = $(".btn-hidden");
+
+    for (let index = 0; index < buttonHidden.length; index++) {
+        hiddenRow(buttonHidden[index]);
+    }
     $table.search("").draw();
 });
-
 
 function filterData(nameCol, value) {
     var indexCol = listColumn[nameCol];
@@ -43,7 +45,6 @@ function filterData(nameCol, value) {
     $table.columns(indexCol).search(value).draw();
 }
 
-
 function addRow() {
     numberRow = searchField.childElementCount;
     if (numberRow >= 3) {
@@ -52,14 +53,14 @@ function addRow() {
     searchField.insertAdjacentHTML("beforeend", rawHTML(numberRow + 1));
 }
 
-
 function hiddenRow(button) {
     // var rowDelete= button.parentElement.parentElement.parentElement.remove();
     var rowDelete = $(button).closest(".row");
     var filterRemove = $(rowDelete).find("select").val();
-    filterData(filterRemove,'')
 
     rowDelete.remove();
+    filterData(filterRemove, "");
+
     var numberChild = searchField.childElementCount;
     if (numberChild < 1) {
         return;
@@ -103,3 +104,8 @@ function rawHTML(index) {
 </div>`;
     return htmlRaw;
 }
+
+$(document).ready(function () {
+    // Setup - add a text input to each footer cell
+  
+});

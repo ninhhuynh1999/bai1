@@ -21,16 +21,16 @@
         <div class="col-md-2">
             <div class="form-group">
                 <label for="">Lọc</label>
-                <select  name="filter_date" class="form-control select2" style="width: 100%;">
+                <select name="filter_date" class="form-control select2" style="width: 100%;">
                     <option value="1" selected class="selected">Ngày tạo</option>
-                    <option value="2"  class="">Ngày sửa</option>
+                    <option value="2" class="">Ngày sửa</option>
                 </select>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label for="">Từ ngày</label>
-                <input name="filter_date_from" class="form-control" type="datetime-local" name="" id="">
+                <input name="filter_date_from" id ="filter_date_from" class="form-control" type="text" name="" id="">
             </div>
         </div>
         <div class="col-md-3">
@@ -60,46 +60,11 @@
 
         </div>
     </div>
-    <form id="filter-form" onsubmit="this.preventDefault()" >
-         <div class="search-field">
-        {{-- <div class="row" style="">
-            <div class="col-sm-3">
+    <form id="filter-form" onsubmit="this.preventDefault()">
+        <div class="search-field">
 
-                <label for=""> <span>Danh mục 1</span></label>
-
-                <div class="form-group select-filter-shipping">
-                    <select class="form-control select2" style="width: 100%;">
-                        <option value="" selected class="selected">Tên ĐVVC</option>
-                        <option value="">Tên viết tắt</option>
-                        <option value="">Địa chỉ</option>
-                        <option value="">Số điện thoại</option>
-                        <option value="">Ghi chú</option>
-                        <option disabled="disabled">California (disabled)</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-3">
-                <label for=""><span>Tìm kiếm</span></label>
-
-                <div class="form-group input-filter-shipping">
-                    <input type="text" class="form-control" placeholder="Nhập nội dung tìm kiếm">
-                </div>
-            </div>
-            <div class="col-sm-1">
-                <div class="form-group">
-                    <button class="form-control btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i>
-                    </button>
-                </div>
-
-            </div>
-        </div> --}}
-
-    </div>
+        </div>
     </form>
-   
-
-
-
 
 
     <div class="row text-center text-danger">
@@ -127,22 +92,22 @@
                     <br> Tên tài khoản ngân hàng
                 </th>
                 <th>
-                    Tên viết tắt <br>
-                    Số TK NH <br>
+                    Tên viết tắt/ <br>
+                    Số TK NH/ <br>
                     Tk Đăng nhập
                 </th>
                 <th>
-                    Mã số thuế <br>
-                    Số điện thoại
+                    Số điện thoại <br>
+                    Mã số thuế
                 </th>
                 <th> Ghi chú</th>
                 <th>
-                    Địa chỉ <br>
+                    Địa chỉ /<br>
                     Thông tin <br>
                 </th>
                 <th>
-                    Trạng thái <br>
-                    Người tạo <br>
+                    Trạng thái/ <br>
+                    Người tạo /<br>
                     Ngày tạo
                 </th>
                 <th>
@@ -159,10 +124,13 @@
 @section('js')
     <script>
         window.addEventListener('load', function() {
+            $('#filter_date_from').dtDateTime();
             var index = 1;
             $table = $('#shipping-table').DataTable({
                 processing: true,
                 serverSide: true,
+                responsive: true,
+                "scrollX": true,
                 lengthMenu: [20, 40, 60, 80, 100],
                 ajax: '{!! route('datatables.getAllShippingUnit') !!}',
                 columnDefs: [{
@@ -233,7 +201,37 @@
                     }
 
                 ],
-                
+                buttons: [{
+                    text: 'My button',
+                    action: function(e, dt, node, config) {
+                        alert('Button activated');
+                    }
+                }],
+            });
+
+
+            $table.columns('.select-filter').every(function() {
+                var that = this;
+
+                // Create the select list and search operation
+                var select = $('<select />')
+                    .appendTo(
+                        this.footer()
+                    )
+                    .on('change', function() {
+                        that
+                            .search($(this).val())
+                            .draw();
+                    });
+
+                // Get the search data for the first column and add to the select list
+                this
+                    .cache('search')
+                    .sort()
+                    .unique()
+                    .each(function(d) {
+                        select.append($('<option value="' + d + '">' + d + '</option>'));
+                    });
             });
         });
     </script>

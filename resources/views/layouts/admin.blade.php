@@ -420,7 +420,8 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     {{-- <script src="{{ asset('/js/adminLTE/pages/dashboard.js') }}"></script> --}}
     <!-- AdminLTE for demo purposes -->
-    <script src="{{ asset('/js/adminLTE/demo.js') }}"></script>
+    {{-- <script src="{{ asset('/js/adminLTE/demo.js') }}"></script> --}}
+    <script src="{{ asset('/plugins/datatables/dataTables.dateTime.min.js') }}"></script>
 
     
     {{-- Datatable JS --}}
