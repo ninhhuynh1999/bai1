@@ -16,6 +16,92 @@
 @endsection
 
 @section('content')
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="">Lọc</label>
+                <select  name="filter_date" class="form-control select2" style="width: 100%;">
+                    <option value="1" selected class="selected">Ngày tạo</option>
+                    <option value="2"  class="">Ngày sửa</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="">Từ ngày</label>
+                <input name="filter_date_from" class="form-control" type="datetime-local" name="" id="">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="">Đến ngày</label>
+                <input name="filter_date_end" class="form-control" type="datetime-local" name="" id="">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="" for=""> Chức năng</label> <br>
+                <div class="btn-filter">
+                    <button class="btn btn-success form-control" id="btn-add">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Thêm
+                    </button>
+                    <button class="btn btn-info form-control" id="btn-search">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        Tìm kiếm
+                    </button>
+                    <button class="btn btn-primary form-control" id="btn-all">
+                        Tất cả
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <form id="filter-form" onsubmit="this.preventDefault()" >
+         <div class="search-field">
+        {{-- <div class="row" style="">
+            <div class="col-sm-3">
+
+                <label for=""> <span>Danh mục 1</span></label>
+
+                <div class="form-group select-filter-shipping">
+                    <select class="form-control select2" style="width: 100%;">
+                        <option value="" selected class="selected">Tên ĐVVC</option>
+                        <option value="">Tên viết tắt</option>
+                        <option value="">Địa chỉ</option>
+                        <option value="">Số điện thoại</option>
+                        <option value="">Ghi chú</option>
+                        <option disabled="disabled">California (disabled)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <label for=""><span>Tìm kiếm</span></label>
+
+                <div class="form-group input-filter-shipping">
+                    <input type="text" class="form-control" placeholder="Nhập nội dung tìm kiếm">
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <div class="form-group">
+                    <button class="form-control btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div> --}}
+
+    </div>
+    </form>
+   
+
+
+
+
+
     <div class="row text-center text-danger">
         <span>
             <h4>
@@ -27,15 +113,15 @@
         <span>
             <h4>
                 @if (session()->has('success'))
-                {{ session()->get('success') }}
-            @endif
+                    {{ session()->get('success') }}
+                @endif
             </h4>
         </span>
     </div>
-    <table class="table table-bordered" id="users-table">
+    <table class="table table-bordered" id="shipping-table">
         <thead>
             <tr>
-                <th>STT</th>
+                <th>ID</th>
                 <th>
                     Tên đầy đủ
                     <br> Tên tài khoản ngân hàng
@@ -73,15 +159,16 @@
 @section('js')
     <script>
         window.addEventListener('load', function() {
-            $table = $('#users-table').DataTable({
+            var index = 1;
+            $table = $('#shipping-table').DataTable({
                 processing: true,
                 serverSide: true,
+                lengthMenu: [20, 40, 60, 80, 100],
                 ajax: '{!! route('datatables.getAllShippingUnit') !!}',
-                columnDefs: [
-                    {
+                columnDefs: [{
                         data: 'id',
                         render: function(data, screen, record, index) {
-                            return `<div> ${index.row+1} </div>`;
+                            return `<div> ${data}</div>`;
                         },
                         targets: 0
                     },
@@ -117,7 +204,7 @@
                     {
                         data: 'address',
                         render: function(data, screen, record, index) {
-                            return `<div> ${data} <br> ${record.contac}  </div>`
+                            return `<div> ${data} <br> ${record.contact}  </div>`
                         },
                         targets: 5
                     },
@@ -132,8 +219,9 @@
                         class: 'align-middle',
                         data: 'id',
                         render: function(data, screen, record, index) {
-                            var  btnEdit = `<a href="{{ url('/admin/shipping-unit/edit') }}/${data}" class="link-control align-middle"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>`;
-                            var  btnDelete = `<form action="{{ route('shippingUnit.delete') }}" method="POST">
+                            var btnEdit =
+                                `<a href="{{ url('/admin/shipping-unit/edit') }}/${data}" class="link-control align-middle"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>`;
+                            var btnDelete = `<form action="{{ route('shippingUnit.delete') }}" method="POST">
                                                 @csrf
                                                 <a href="#" onclick="$(this).closest('form').submit();" class="link-control"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                                 <input type="hidden" name="id" value="${data}">
@@ -144,21 +232,12 @@
                         targets: 7
                     }
 
-                ]
-                // columns: [
-                //     { data: 'id',  },
-                //     { data: 'name',},
-                //     { data: 'bankName',  },
-                //     { data: 'created_at', },
-                //     { data: 'updated_at',  }
-                // ]
+                ],
+                
             });
         });
+    </script>
+    <script src="{{ asset('js/shipping-unit/index.js') }}">
 
-        // $(document).ready(function() {
-        //     $(function() {
-
-
-        // });
     </script>
 @endsection

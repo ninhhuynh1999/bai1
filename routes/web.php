@@ -38,3 +38,4 @@ Route::post('admin/shipping-unit/delete', 'ShippingUnitController@delete')->name
 Route::get('datatables','DatatablesController@getIndex')->name('datatables.index');
 Route::get('datatables/anyData','DatatablesController@anyData')->name('datatables.data');
 Route::get('datatables/getAllShippingUnit','DatatablesController@getAllShippingUnit')->name('datatables.getAllShippingUnit');
+Route::get('datatables/filter','DatatablesController@filter')->name('datatables.filter');

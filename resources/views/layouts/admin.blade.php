@@ -22,7 +22,7 @@
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset('plugins/iCheck/flat/blue.css') }}">
     <!-- Morris chart -->
-    <link rel="stylesheet" href="{{ asset('plugins/morris/morris.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('plugins/morris/morris.css') }}"> --}}
     <!-- jvectormap -->
     <link rel="stylesheet" href="{{ asset('plugins/jvectormap/jquery-jvectormap-1.2.2.css') }}">
     <!-- Date Picker -->
@@ -396,7 +396,7 @@
     {{-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> --}}
     <!-- Morris.js charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="{{ asset('plugins/morris/morris.min.js') }}"></script>
+    {{-- <script src="{{ asset('plugins/morris/morris.min.js') }}"></script> --}}
     <!-- Sparkline -->
     <script src="{{ asset('plugins/sparkline/jquery.sparkline.min.js') }}"></script>
     <!-- jvectormap -->
@@ -418,7 +418,7 @@
     <!-- AdminLTE App -->
     <script src="{{ asset('/js/adminLTE/app.min.js') }}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{{ asset('/js/adminLTE/pages/dashboard.js') }}"></script>
+    {{-- <script src="{{ asset('/js/adminLTE/pages/dashboard.js') }}"></script> --}}
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('/js/adminLTE/demo.js') }}"></script>
 
@@ -428,7 +428,6 @@
     <!-- DataTables -->
     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <!-- App scripts -->
-    @stack('scripts')
 
     @yield('js')
 
