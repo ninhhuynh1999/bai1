@@ -10,29 +10,17 @@ use Yajra\Datatables\Datatables;
 
 class DatatablesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function getIndex()
     {
         return view('datatables.index');
     }
 
-    public function getAllShippingUnit(Request $request)
-    {
-        $targetColumn = ['created_at', 'updated_at'];
-        if (!request()->ajax()) {
-            return response()->json(['error' => 'Error: Only accepted AJAX request'], 404); // Status code here
-        }
-        if (!empty($request->from_date) || in_array($request->optionDate, $targetColumn)) {
-
-            $data = ShippingUnit::with('status', 'created_by', 'updated_by')
-                ->whereBetween($request->optionDate, array($request->from_date, $request->to_date))
-                ->get();
-        } else {
-            $data = ShippingUnit::with('status', 'created_by', 'updated_by')->get();
-        }
-        return Datatables::of($data)->make(true);
-        // return Datatables::of($data)->make(true);
-    }
-
+    
     /**
      * Test function
      */
@@ -59,11 +47,4 @@ class DatatablesController extends Controller
         return Datatables::of(User::all())->make(true);
     }
 
-
-    private function mapShippingUnit(ShippingUnit $model)
-    {
-        // $model->
-
-        return ;
-    }
 }

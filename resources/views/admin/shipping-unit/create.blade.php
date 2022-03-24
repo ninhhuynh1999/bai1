@@ -16,6 +16,17 @@
 @endsection
 
 @section('content')
+
+<div class="div-message">
+
+    @if (session()->has('success'))
+        <h3 class="success-message">
+            {{ session()->get('success') }}
+        </h3>
+    @endif
+
+</div>
+
     <h3>THÔNG TIN ĐƠN VỊ VẬN CHUYỂN </h3>
     <form method="POST" action="{{ route('shippingUnit.store') }}">
         @csrf
@@ -138,7 +149,9 @@
         </div>
         <div class="row">
             <div class="col-lg-2">
-                <button type="button" class="btn btn-block btn-warning btn-lg">Trở lại</button>
+                <a href="{{  url()->previous() }}">
+                    <button type="button" class="btn btn-block btn-warning btn-lg">Trở lại</button>
+                </a>
 
             </div>
             <div class="col-lg-2">

@@ -47,6 +47,7 @@
                                     <label class="form-check-label" for="remember">
                                         {{ __('Remember Me') }}
                                     </label>
+                                 
                                 </div>
                             </div>
                         </div>
@@ -62,7 +63,10 @@
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
+                                <h4 for="">Username: user1, user2, user3 , user4 , admin</h4>
+                                <h4 for="">Password: 123456</h4>
                             </div>
+                          
                         </div>
                     </form>
                 </div>

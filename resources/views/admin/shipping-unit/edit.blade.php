@@ -84,7 +84,7 @@
                     <label>Ngày ngừng hợp tác:</label>
 
                     <div class="input-group">
-                        <input type="date" name="dateStopContact" value="{{ $model->date }}" class="form-control"
+                        <input type="date" name="dateStopContact" value="{{ $model->dateStopContact }}" class="form-control"
                             data-inputmask="'alias': 'dd/mm/yyyy'" data-mask="">
                     </div>
                     <!-- /.input group -->
@@ -138,8 +138,9 @@
         </div>
         <div class="row">
             <div class="col-lg-2">
-                <button type="button" class="btn btn-block btn-warning btn-lg">Trở lại</button>
-
+                <a href="{{  url()->previous() }}">
+                    <button type="button" class="btn btn-block btn-warning btn-lg">Trở lại</button>
+                </a>
             </div>
             <div class="col-lg-2">
                 <button type="submit" class="btn btn-block btn-info btn-lg">Lưu</button>

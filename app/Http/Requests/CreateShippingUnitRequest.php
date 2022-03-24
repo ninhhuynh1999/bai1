@@ -38,4 +38,17 @@ class CreateShippingUnitRequest extends FormRequest
             ),
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required'=>'Tên không được để trống',
+            'name.unique'=>'Tên đã được sử dụng',
+            'shortName.required'=>'Tên viết tắt không được để trống',
+            'shortName.unique'=>'Tên viết tắt đã được sử dụng',
+            'phoneNumber.digits'=>'SĐT phải là 10 số',
+            'taxId.digits'=>'Mã số thuế phải 10 số',
+            'bankNumber.digits_between'=>'Số tài khoản phải từ 9-14 số',
+        ];
+    }
 }

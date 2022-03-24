@@ -12,7 +12,8 @@ class ShippingUnit extends Model
         'bankName',    'bankNumber',    
         'bankAddress',    'address',    
         'contact',    'note',
-        'phoneNumber','created_by','updated_by'
+        'phoneNumber','created_by',
+        'updated_by','status_id'
     ];
 
     protected $casts = [

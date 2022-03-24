@@ -27,22 +27,28 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="form-group">
                 <label for="">Từ ngày</label>
                 <input name="filter_from_date" id="filter-from-date" class="form-control" type="date"
                     id="input-from-date">
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="form-group">
                 <label for="">Đến ngày</label>
                 <input name="filter_to_date" id="input-to-date" class="form-control" type="date">
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2" style="padding-top: 2.5rem">
+            <button style="max-width: 90px;" class="btn btn-info form-control" id="btn-clear-date">
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+                Xóa ngày
+            </button>
+        </div>
+        <div class="col-md-2">
             <div class="form-group">
-                <label class="" for=""> Chức năng</label> <br>
+                <label class="" for=""> Chức năng</label>
                 <div class="btn-filter">
                     <button class="btn btn-success form-control" id="btn-add">
                         <i class="fa fa-plus" aria-hidden="true"></i>
@@ -127,16 +133,7 @@
         // add event onLoad to windows 
         $(document).ready(function() {
 
-            //             $( "input[name='filter_from_date']" ).change(function(event) {
-            //  console.log($(this).val());
-            // });
-            // $( "input[name='filter_to_date']" ).change(function(event) {
-            //  console.log($(this).val());
-            // });
-
             $table = load_data();
-
-
         });
         //end window eventListener
 
@@ -146,13 +143,16 @@
             $table = $('#shipping-table').DataTable({
                 processing: true,
                 serverSide: true,
-                responsive: true,
                 destroy: true,
-                scrollX: true,
                 lengthMenu: [20, 40, 60, 80, 100],
                 ajax: {
-                    url: '{!! route('datatables.getAllShippingUnit') !!}',
-                    data: data,
+                    url: "{{ route("shippingUnit.getall") }}",
+                    data: {
+                        from_date: data['from_date'],
+                        to_date: data['to_date'],
+                        optionDate: data['optionDate']
+                    },
+                    method:'get'
                 },
                 columnDefs: [{
                         data: 'id',
@@ -222,11 +222,24 @@
                     }
 
                 ], //end columnDefs
-
+                language: {
+                    "lengthMenu": "Hiển thị _MENU_ hàng trong trang",
+                    "zeroRecords": "Không tìm thấy dữ liệu",
+                    "info": "Hiển thị trang thứ _PAGE_ trong _PAGES_ trang",
+                    "infoEmpty": "No records available",
+                    "infoFiltered": "(filtered from _MAX_ total records)",
+                    "paginate": {
+                        "next": "Trang sau",
+                        'previous': 'Trang trước'
+                    }
+                },
+                // "bFilter": false,
             });
             //end $table
             return $table;
         }
+
+
         //end load_data
     </script>
 

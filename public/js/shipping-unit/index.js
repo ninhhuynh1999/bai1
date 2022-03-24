@@ -18,7 +18,7 @@ btnAdd.addEventListener("click", (e) => {
 
 //Search data when click
 btnSearch.addEventListener("click", () => {
-    var data = $("#filter-form").serializeArray();
+    var dataForm = $("#filter-form").serializeArray();
     var from_date = $("input[name='filter_from_date']").val();
     var to_date = $("input[name='filter_to_date']").val();
     var optionDate = $("select[name='filter_date_option']").val();
@@ -27,11 +27,12 @@ btnSearch.addEventListener("click", () => {
         to_date:to_date,
         optionDate:optionDate
     }
-    console.log(from_date + "--" + to_date+'--'+optionDate);
+    console.log(from_date + "-" + to_date+'-'+optionDate);
     var table = load_data(data);
 
-    for (let index = 0; index < data.length; index += 2) {
-        filterData(data[index]["value"], data[index + 1]["value"]);
+    for (let index = 0; index < dataForm.length; index += 2) {
+
+        filterData(dataForm[index]["value"], dataForm[index + 1]["value"]);
     }
 });
 
@@ -43,6 +44,7 @@ btnAll.addEventListener("click", () => {
     //     hiddenRow(buttonHidden[index]);
     // }
     // $table.search("").draw();
+
     $("#shipping_table").DataTable().destroy();
     $(".search-field .row").remove();
     load_data();
@@ -51,10 +53,12 @@ btnAll.addEventListener("click", () => {
 //filter data by name columns
 function filterData(nameCol, value) {
     var indexCol = listColumn[nameCol];
-
-    // console.log(indexCol + "-" + value);
+    if(value){
+            console.log(indexCol + "-" + value);
 
     $table.columns(indexCol).search(value).draw();
+    }
+
 }
 
 //add row filter

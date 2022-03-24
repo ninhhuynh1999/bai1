@@ -8,12 +8,13 @@ use App\ShippingUnit;
 use App\StatusShippingUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\DataTables;
 
 class ShippingUnitController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
 
@@ -32,13 +33,13 @@ class ShippingUnitController extends Controller
 
     public function store(CreateShippingUnitRequest $request)
     {
-
         $shippingUnit =  ShippingUnit::create([
             'name' => $request->name,
             'phoneNumber' => $request->phoneNumber,
             'shortName' => $request->shortName,
             'taxId' => $request->taxId,
-            'dateStopContact' => $request->taxId === 2 ? $request->dateStopContact : null,
+            'status_id'=>intval($request->status_id),
+            'dateStopContact' => $request->status_id == 2 ? $request->dateStopContact : null,
             'bankName' => $request->bankName,
             'bankNumber' => $request->bankNumber,
             'bankAddress' => $request->bankAddress,
@@ -49,7 +50,8 @@ class ShippingUnitController extends Controller
             'updated_by' => Auth::id(),
         ]);
         $shippingUnit->save();
-        return back();
+
+        return back()->with('success','Tạo ĐVVC thành công');
     }
 
     public function edit(int $id)
@@ -73,7 +75,8 @@ class ShippingUnitController extends Controller
         $shippingUnit->phoneNumber = $request->phoneNumber;
         $shippingUnit->shortName = $request->shortName;
         $shippingUnit->taxId = $request->taxId;
-        $shippingUnit->dateStopContact = $request->dateStopContact;
+        $shippingUnit->status_id =  intval($request->status_id) ;
+        $shippingUnit->dateStopContact = $request->status_id == 2 ? $request->dateStopContact : null;
         $shippingUnit->bankName = $request->bankName;
         $shippingUnit->bankNumber = $request->bankNumber;
         $shippingUnit->bankAddress = $request->bankAddress;
@@ -93,14 +96,33 @@ class ShippingUnitController extends Controller
         try {
             $shippingUnit = ShippingUnit::findOrFail($id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $th) {
-            return back()->with('fail', 'Not Found Your Unit');
+            return back()->with('fail', 'Không tìm thấy');
         }
 
         if (!$shippingUnit->created_by === Auth::id()) {
-            return back()->with('fail', 'Delete fail (Unauthorized)');
+            return back()->with('fail', 'Không thể xóa (bạn ko phải người tạo)');
         }
 
         $result = $shippingUnit->delete();
-        return back()->with('success', 'Deleted Successfully');
+        return back()->with('success', 'Xóa ĐVVC thành công');
     }
+
+    public function getAll(Request $request)
+    {
+
+        $targetColumn = ['created_at', 'updated_at'];
+        
+
+            if (!empty($request->from_date)) {
+                $data = ShippingUnit::with('status', 'created_by', 'updated_by')
+                    ->whereBetween($request->optionDate, [$request->from_date, $request->to_date])
+                    ->get();
+            } else {
+                $data = ShippingUnit::with('status', 'created_by', 'updated_by')->get();
+            }
+            return DataTables::of($data)->make(true);
+        
+        return view('home');
+    }
+
 }

@@ -1,9 +1,9 @@
-span.text-error{
+span.text-error {
     color: red;
     font-weight: 550;
 }
 
-.link-control{
+.link-control {
     font-size: 25;
     padding: 3px 3px;
 }
@@ -11,29 +11,93 @@ span.text-error{
     color: brown;
 }
 
-.table>tbody>tr>td{
+.table > tbody > tr > td {
     vertical-align: middle;
 }
 
-#shipping-table>th,td{
+#shipping-table > th,
+td {
     max-width: 200px;
 }
 
-.select-filter-shipping{
+.select-filter-shipping {
     width: 50%;
     display: inline-block;
 }
-.input-filter-shipping{
+.input-filter-shipping {
     width: 60%;
     display: inline-block;
 }
 
-.btn-filter{
+.btn-filter {
     display: inline-block;
 }
-.btn-filter button{
+.btn-filter button {
     width: fit-content !important;
 }
-.pb-5{
-    padding-bottom:5px ;
+.pb-5 {
+    padding-bottom: 5px;
+}
+.div-message {
+    max-width: fit-content;
+    background-color: rgb(55, 189, 111);
+    margin: 0 auto;
+    text-align: center;
+    /* border-radius */
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    /* box-shadow */
+    -webkit-box-shadow: rgba(0, 0, 0, 0.8) 0px 0 10px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.8) 0 0 10px;
+    box-shadow: rgba(0, 0, 0, 0.8) 0 0 10px;
+}
+
+.success-message {
+    /* background-color: rgba(67, 197, 67, 0.726); */
+    color: black;
+    text-align: center;
+    margin: 5px;
+    padding: 15px;
+}
+
+.div-message {
+    /*  */
+
+
+    animation: fadeInAnimation ease-in 5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+@keyframes fadeInAnimation {
+   to {
+      
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
+}
+@-webkit-keyframes fadeInAnimation {
+   to{
+        opacity: 0;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
+}
+
+input, select, textarea{
+    border-radius: 5px !important;
+}
+
+form>a>i{
+    color: red;
+}
+
+.dataTables_filter{
+    display: none;
+}
+
+button.btn{
+    font-weight: bold;
 }
