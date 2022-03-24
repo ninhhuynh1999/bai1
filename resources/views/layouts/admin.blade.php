@@ -422,7 +422,7 @@
     <!-- AdminLTE for demo purposes -->
     {{-- <script src="{{ asset('/js/adminLTE/demo.js') }}"></script> --}}
     <script src="{{ asset('/plugins/datatables/dataTables.dateTime.min.js') }}"></script>
-
+{{-- Momnet js --}}
     
     {{-- Datatable JS --}}
 

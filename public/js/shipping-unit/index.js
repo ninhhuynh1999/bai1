@@ -10,41 +10,54 @@ const listColumn = {
     note: 4,
     address: 5,
 };
-const listFilter = {
-    name: 1,
-    shortName: 2,
-    phoneNumber: 3,
-    note: 4,
-    address: 5,
-};
+
+//Handle add row
 btnAdd.addEventListener("click", (e) => {
     addRow();
 });
 
+//Search data when click
 btnSearch.addEventListener("click", () => {
     var data = $("#filter-form").serializeArray();
+    var from_date = $("input[name='filter_from_date']").val();
+    var to_date = $("input[name='filter_to_date']").val();
+    var optionDate = $("select[name='filter_date_option']").val();
+    var data={
+        from_date:from_date,
+        to_date:to_date,
+        optionDate:optionDate
+    }
+    console.log(from_date + "--" + to_date+'--'+optionDate);
+    var table = load_data(data);
+
     for (let index = 0; index < data.length; index += 2) {
         filterData(data[index]["value"], data[index + 1]["value"]);
     }
 });
 
+//remove all filter and get all data
 btnAll.addEventListener("click", () => {
-    var buttonHidden = $(".btn-hidden");
+    // var buttonHidden = $(".btn-hidden");
 
-    for (let index = 0; index < buttonHidden.length; index++) {
-        hiddenRow(buttonHidden[index]);
-    }
-    $table.search("").draw();
+    // for (let index = 0; index < buttonHidden.length; index++) {
+    //     hiddenRow(buttonHidden[index]);
+    // }
+    // $table.search("").draw();
+    $("#shipping_table").DataTable().destroy();
+    $(".search-field .row").remove();
+    load_data();
 });
 
+//filter data by name columns
 function filterData(nameCol, value) {
     var indexCol = listColumn[nameCol];
 
-    console.log(indexCol + "-" + value);
+    // console.log(indexCol + "-" + value);
 
     $table.columns(indexCol).search(value).draw();
 }
 
+//add row filter
 function addRow() {
     numberRow = searchField.childElementCount;
     if (numberRow >= 3) {
@@ -71,6 +84,7 @@ function hiddenRow(button) {
     }
 }
 
+// html for row filter
 function rawHTML(index) {
     var htmlRaw = `<div class="row" style="">
 <div class="col-sm-3">
@@ -104,8 +118,3 @@ function rawHTML(index) {
 </div>`;
     return htmlRaw;
 }
-
-$(document).ready(function () {
-    // Setup - add a text input to each footer cell
-  
-});

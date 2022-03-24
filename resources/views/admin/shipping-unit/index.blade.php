@@ -21,22 +21,23 @@
         <div class="col-md-2">
             <div class="form-group">
                 <label for="">Lọc</label>
-                <select name="filter_date" class="form-control select2" style="width: 100%;">
-                    <option value="1" selected class="selected">Ngày tạo</option>
-                    <option value="2" class="">Ngày sửa</option>
+                <select name="filter_date_option" class="form-control select2" style="width: 100%;">
+                    <option value="created_at" selected class="selected">Ngày tạo</option>
+                    <option value="updated_at" class="">Ngày sửa</option>
                 </select>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label for="">Từ ngày</label>
-                <input name="filter_date_from" id ="filter_date_from" class="form-control" type="text" name="" id="">
+                <input name="filter_from_date" id="filter-from-date" class="form-control" type="date"
+                    id="input-from-date">
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
                 <label for="">Đến ngày</label>
-                <input name="filter_date_end" class="form-control" type="datetime-local" name="" id="">
+                <input name="filter_to_date" id="input-to-date" class="form-control" type="date">
             </div>
         </div>
         <div class="col-md-4">
@@ -108,7 +109,7 @@
                 <th>
                     Trạng thái/ <br>
                     Người tạo /<br>
-                    Ngày tạo
+                    Người sửa
                 </th>
                 <th>
                     Chức năng
@@ -123,16 +124,36 @@
 
 @section('js')
     <script>
-        window.addEventListener('load', function() {
-            $('#filter_date_from').dtDateTime();
-            var index = 1;
+        // add event onLoad to windows 
+        $(document).ready(function() {
+
+            //             $( "input[name='filter_from_date']" ).change(function(event) {
+            //  console.log($(this).val());
+            // });
+            // $( "input[name='filter_to_date']" ).change(function(event) {
+            //  console.log($(this).val());
+            // });
+
+            $table = load_data();
+
+
+        });
+        //end window eventListener
+
+
+        function load_data(data = []) {
+
             $table = $('#shipping-table').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                "scrollX": true,
+                destroy: true,
+                scrollX: true,
                 lengthMenu: [20, 40, 60, 80, 100],
-                ajax: '{!! route('datatables.getAllShippingUnit') !!}',
+                ajax: {
+                    url: '{!! route('datatables.getAllShippingUnit') !!}',
+                    data: data,
+                },
                 columnDefs: [{
                         data: 'id',
                         render: function(data, screen, record, index) {
@@ -179,7 +200,7 @@
                     {
                         data: 'created_by',
                         render: function(data, screen, record, index) {
-                            return `<div> ${record.updated_by.name} <br> ${record.status.name} <br> ${record.created_by.name} </div>`
+                            return `<div> <b>${record.status.name}</b> <br>${record.created_by.name}: ${record.created_at} <br> ${record.updated_by.name} : ${record.updated_at} </div>`
                         },
                         targets: 6
                     },
@@ -193,49 +214,22 @@
                                                 @csrf
                                                 <a href="#" onclick="$(this).closest('form').submit();" class="link-control"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                                 <input type="hidden" name="id" value="${data}">
-                                                </form>`;
+                                            </form>`;
 
                             return `<div class="text-center" >  ${btnEdit} ${btnDelete }</div>`
                         },
                         targets: 7
                     }
 
-                ],
-                buttons: [{
-                    text: 'My button',
-                    action: function(e, dt, node, config) {
-                        alert('Button activated');
-                    }
-                }],
+                ], //end columnDefs
+
             });
-
-
-            $table.columns('.select-filter').every(function() {
-                var that = this;
-
-                // Create the select list and search operation
-                var select = $('<select />')
-                    .appendTo(
-                        this.footer()
-                    )
-                    .on('change', function() {
-                        that
-                            .search($(this).val())
-                            .draw();
-                    });
-
-                // Get the search data for the first column and add to the select list
-                this
-                    .cache('search')
-                    .sort()
-                    .unique()
-                    .each(function(d) {
-                        select.append($('<option value="' + d + '">' + d + '</option>'));
-                    });
-            });
-        });
+            //end $table
+            return $table;
+        }
+        //end load_data
     </script>
-    <script src="{{ asset('js/shipping-unit/index.js') }}">
 
-    </script>
+    {{-- import js --}}
+    <script src="{{ asset('js/shipping-unit/index.js') }}"></script>
 @endsection

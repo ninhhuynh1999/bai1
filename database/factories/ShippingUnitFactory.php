@@ -5,8 +5,10 @@ use Faker\Generator as Faker;
 
 $factory->define(ShippingUnit::class, function (Faker $faker) {
     return [
+        'name' => $faker->name(),
+        'shortName' => $faker->regexify('[A-Z]{5}'),
         'name' => $faker->name,
-        'shortName' => strtoupper($faker->lexify('???')),
+
         'phoneNumber' =>  $faker->numerify('##########'),
         'taxId' => $faker->numerify('##########'), // secret
         'dateStopContact' => $faker->dateTimeBetween('-10 months', 'now'),

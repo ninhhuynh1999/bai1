@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateShippingUnitRequest;
+use App\Http\Requests\EditSphippingUnitRequest;
 use App\ShippingUnit;
 use App\StatusShippingUnit;
 use Illuminate\Http\Request;
@@ -61,7 +62,7 @@ class ShippingUnitController extends Controller
     }
 
 
-    public function update(Request $request)
+    public function update(EditSphippingUnitRequest $request)
     {
         try {
             $shippingUnit = ShippingUnit::findOrFail($request->id);

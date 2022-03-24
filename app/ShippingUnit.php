@@ -15,6 +15,11 @@ class ShippingUnit extends Model
         'phoneNumber','created_by','updated_by'
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime:d-m-Y',
+        'updated_at' => 'datetime:d-m-Y'
+    ];
+
     public function status()
     {
         return $this->belongsTo(StatusShippingUnit::class);

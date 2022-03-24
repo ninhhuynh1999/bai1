@@ -16,8 +16,8 @@ class CreateShippingUnitsTable extends Migration
         Schema::create('shipping_units', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('name');
-            $table->string('shortName');
+            $table->string('name')->unique();
+            $table->string('shortName')->unique();
             $table->string('phoneNumber')->nullable();
             $table->string('taxId')->nullable();
             $table->unsignedInteger('status_id')->default(1);
