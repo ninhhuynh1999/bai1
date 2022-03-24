@@ -22,13 +22,11 @@ btnSearch.addEventListener("click", () => {
     var from_date = $("input[name='filter_from_date']").val();
     var to_date = $("input[name='filter_to_date']").val();
     var optionDate = $("select[name='filter_date_option']").val();
-    var data={
-        from_date:from_date,
-        to_date:to_date,
-        optionDate:optionDate
-    }
+
+
+    
     console.log(from_date + "-" + to_date+'-'+optionDate);
-    var table = load_data(data);
+    var table = load_data(from_date,to_date,optionDate);
 
     for (let index = 0; index < dataForm.length; index += 2) {
 

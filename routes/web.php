@@ -25,14 +25,14 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin', 'AdminController@index')->name('admin.index');
 
-Route::get('/admin/shipping-unit/create','ShippingUnitController@create')->name('shippingUnit.create');
-Route::get('admin/shipping-unit/', 'ShippingUnitController@index')->name('shippingUnit.index');
-Route::get('admin/shipping-unit/edit/{id}', 'ShippingUnitController@edit')->name('shippingUnit.edit');
-Route::get('admin/shipping-unit/getall', 'ShippingUnitController@getall')->name('shippingUnit.getall');
+Route::get('/admin/model/create','ShippingUnitController@create')->name('shippingUnit.create');
+Route::get('admin/model/', 'ShippingUnitController@index')->name('shippingUnit.index');
+Route::get('admin/model/edit/{id}', 'ShippingUnitController@edit')->name('shippingUnit.edit');
+Route::get('admin/model/getall', 'ShippingUnitController@getall')->name('shippingUnit.getall');
 
-Route::post('admin/shipping-unit/store', 'ShippingUnitController@store')->name('shippingUnit.store');
-Route::post('admin/shipping-unit/update/', 'ShippingUnitController@update')->name('shippingUnit.update');
-Route::post('admin/shipping-unit/delete', 'ShippingUnitController@delete')->name('shippingUnit.delete');
+Route::post('admin/model/store', 'ShippingUnitController@store')->name('shippingUnit.store');
+Route::post('admin/model/update/', 'ShippingUnitController@update')->name('shippingUnit.update');
+Route::post('admin/model/delete', 'ShippingUnitController@delete')->name('shippingUnit.delete');
 
 
 

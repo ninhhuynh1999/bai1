@@ -138,7 +138,7 @@
         //end window eventListener
 
 
-        function load_data(data = []) {
+        function load_data(from_date = '',to_date='',optionDate='') {
 
             $table = $('#shipping-table').DataTable({
                 processing: true,
@@ -148,9 +148,9 @@
                 ajax: {
                     url: "{{ route("shippingUnit.getall") }}",
                     data: {
-                        from_date: data['from_date'],
-                        to_date: data['to_date'],
-                        optionDate: data['optionDate']
+                        from_date: from_date,
+                        to_date: to_date,
+                        optionDate: optionDate
                     },
                     method:'get'
                 },

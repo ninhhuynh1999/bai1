@@ -421,13 +421,14 @@
     {{-- <script src="{{ asset('/js/adminLTE/pages/dashboard.js') }}"></script> --}}
     <!-- AdminLTE for demo purposes -->
     {{-- <script src="{{ asset('/js/adminLTE/demo.js') }}"></script> --}}
-    <script src="{{ asset('/plugins/datatables/dataTables.dateTime.min.js') }}"></script>
+    {{-- <script src="{{ asset('/plugins/datatables/dataTables.dateTime.min.js') }}"></script> --}}
 {{-- Momnet js --}}
     
     {{-- Datatable JS --}}
 
     <!-- DataTables -->
-    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+    {{-- <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script> --}}
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
     <!-- App scripts -->
 
     @yield('js')

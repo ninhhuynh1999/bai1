@@ -8,7 +8,7 @@ use App\ShippingUnit;
 use App\StatusShippingUnit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class ShippingUnitController extends Controller
 {
@@ -20,7 +20,7 @@ class ShippingUnitController extends Controller
 
     public function index()
     {
-        return view('admin.shipping-unit.index');
+        return view('admin.shipping_unit.index');
     }
 
     public function create()
@@ -28,7 +28,7 @@ class ShippingUnitController extends Controller
 
         $statusList = StatusShippingUnit::all();
 
-        return view('admin.shipping-unit.create', ['statusList' => $statusList]);
+        return view('admin.shipping_unit.create', ['statusList' => $statusList]);
     }
 
     public function store(CreateShippingUnitRequest $request)
@@ -60,7 +60,7 @@ class ShippingUnitController extends Controller
         $shippingUnit = ShippingUnit::find($id);
         $statusList = StatusShippingUnit::all();
 
-        return view('admin.shipping-unit.edit', ['model' => $shippingUnit,'statusList'=> $statusList]);
+        return view('admin.shipping_unit.edit', ['model' => $shippingUnit,'statusList'=> $statusList]);
     }
 
 
