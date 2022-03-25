@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@yield('title')</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 
     <!-- Tell the browser to be responsive to screen width -->
@@ -37,7 +38,7 @@
     {{-- Datatable --}}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 
-    
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -152,8 +153,8 @@
                                 class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu active menu-open">
-                            <li class=""><a href="{{ route('shippingUnit.create') }}"><i
-                                        class="fa fa-circle-o"></i> Thêm mới</a></li>
+                            {{-- <li class=""><a href="{{ route('shippingUnit.create') }}"><i
+                                        class="fa fa-circle-o"></i> Thêm mới</a></li> --}}
                             <li><a href="{{ route('shippingUnit.index') }}"><i class="fa fa-circle-o"></i> Danh mục
                                     ĐVVC</a></li>
                         </ul>
@@ -424,8 +425,8 @@
     <!-- AdminLTE for demo purposes -->
     {{-- <script src="{{ asset('/js/adminLTE/demo.js') }}"></script> --}}
     {{-- <script src="{{ asset('/plugins/datatables/dataTables.dateTime.min.js') }}"></script> --}}
-{{-- Momnet js --}}
-    
+    {{-- Momnet js --}}
+
     {{-- Datatable JS --}}
 
     <!-- DataTables -->

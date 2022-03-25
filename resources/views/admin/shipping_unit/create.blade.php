@@ -131,28 +131,29 @@
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>Địa chỉ</label>
-                    <textarea name="address" class="form-control" rows="3" value="{{ old('address') }}" placeholder="Nhập địa chỉ"></textarea>
+                    <textarea name="address" class="form-control" rows="3" placeholder="Nhập địa chỉ">{{ old('address') }}</textarea>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>Thông tin liên hệ</label>
-                    <textarea name="contact" class="form-control" rows="3" value="{{ old('contact') }}" placeholder="Nhập thông tin liên hệ"></textarea>
+                    <textarea name="contact" class="form-control" rows="3" value="" placeholder="Nhập thông tin liên hệ">{{ old('contact') }}</textarea>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
                     <label>Ghi chú</label>
-                    <textarea name="note" class="form-control" rows="3" value="{{ old('note') }}" placeholder="Nhập ghi chú"></textarea>
+                    <textarea name="note" class="form-control" rows="3" value="" placeholder="Nhập ghi chú">{{ old('note') }}</textarea>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-lg-2">
-                <a href="{{  url()->previous() }}">
+                <a href="{{  route('shippingUnit.index') }}">
+              
                     <button type="button" class="btn btn-block btn-warning btn-lg">Trở lại</button>
                 </a>
-
             </div>
             <div class="col-lg-2">
                 <button type="submit" class="btn btn-block btn-info btn-lg">Lưu</button>

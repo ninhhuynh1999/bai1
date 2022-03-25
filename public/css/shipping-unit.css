@@ -7,9 +7,17 @@ span.text-error {
     font-size: 25;
     padding: 3px 3px;
 }
-.link-control i:hover {
+
+button.link-control {
+    border: none;
+    background: none;
+    color: red;
+}
+
+.link-control i:hover{
     color: brown;
 }
+
 
 .table > tbody > tr > td {
     vertical-align: middle;
@@ -110,3 +118,49 @@ i.null-data{
 .pt-2{
     padding-top: 2.5rem;
 }
+
+.pb-2{
+    padding-bottom: 2rem;
+}
+
+/* index page */
+
+.content-form-group label{
+    width: 100%;
+}
+
+.example-modal{
+    position: fixed;
+    width: 100vw;
+    z-index: 10;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    background: #8080809c;
+}
+
+ .modal {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    right: auto;
+    left: auto;
+    display: block;
+    z-index: 15;
+  }
+ .modal {
+    background: transparent !important;
+    top: 20%;
+  }
+
+  .modal-content{ 
+      max-width: 60%;
+      position: relative;
+      right: -15%;
+      z-index: 20;
+  }
+
+/* end index page */

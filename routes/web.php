@@ -32,7 +32,7 @@ Route::get('admin/model/getall', 'ShippingUnitController@getall')->name('shippin
 
 Route::post('admin/model/store', 'ShippingUnitController@store')->name('shippingUnit.store');
 Route::post('admin/model/update/', 'ShippingUnitController@update')->name('shippingUnit.update');
-Route::post('admin/model/delete', 'ShippingUnitController@delete')->name('shippingUnit.delete');
+Route::delete('admin/model/delete/{id?}', 'ShippingUnitController@delete')->name('shippingUnit.delete');
 
 
 

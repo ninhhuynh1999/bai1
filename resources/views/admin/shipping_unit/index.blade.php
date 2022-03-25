@@ -16,19 +16,31 @@
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col-md-1 pt-2">
-            <div class="btn-filter">
-                <a href="{{ route('shippingUnit.create') }}">
-                        
-                    <button class="btn btn-info form-control" id="btn-add-shipping-unit">
-                      
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                        Tạo mới ĐVVC
-                    </button>
-                </a>
+    <div class="example-modal">
+        <div class="modal modal-danger">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Danger Modal</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>One fine body&hellip;</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-outline">Save changes</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
             </div>
+            <!-- /.modal-dialog -->
         </div>
+        <!-- /.modal -->
+    </div>
+    <!-- /.example-modal -->
+    <div class="row">
         <div class="col-md-2">
             <div class="form-group">
                 <label for="">Lọc theo</label>
@@ -51,27 +63,27 @@
                 <input name="filter_to_date" id="input-to-date" class="form-control" type="date">
             </div>
         </div>
-        <div class="col-md-2" style="padding-top: 2.5rem">
-            <button style="max-width: 90px;" class="btn btn-info form-control" id="btn-clear-date">
-                <i class="fa fa-refresh" aria-hidden="true"></i>
-                Xóa ngày
-            </button>
+        <div class="col-md-4">
+
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                <label class="" for=""> Chức năng</label>
-                <div class="btn-filter">
-                    <button class="btn btn-success form-control" id="btn-add">
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                        Thêm
-                    </button>
-                    <button class="btn btn-info form-control" id="btn-search">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                        Tìm kiếm
-                    </button>
-                    <button class="btn btn-primary form-control" id="btn-all">
-                        Tất cả
-                    </button>
+                <div class="content-form-group">
+
+                    <label class="" for=""> Chức năng</label>
+                    <div class="btn-filter">
+                        <button class="btn btn-success form-control" id="btn-add">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            Thêm
+                        </button>
+                        <button class="btn btn-info form-control" id="btn-search">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                            Tìm kiếm
+                        </button>
+                        <button class="btn btn-primary form-control" id="btn-all">
+                            Tất cả
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -99,6 +111,23 @@
             </h4>
         </span>
     </div>
+
+    <div class="row">
+        <div class="col-md-1 pb-2">
+            <div class="btn-filter">
+                <a href="{{ route('shippingUnit.create') }}">
+
+                    <button class="btn btn-info form-control" id="btn-add-shipping-unit">
+
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Thêm mới
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+
     <table class="table table-bordered" id="shipping-table">
         <thead>
             <tr>
@@ -138,11 +167,9 @@
 @stop
 
 @section('js')
-    <script>
+    <script type="text/javascript">
         // add event onLoad to windows 
-        $(document).ready(function() {
-            $table = load_data();
-        });
+
         //end window eventListener
 
         function load_data(from_date = '', to_date = '', optionDate = '') {
@@ -220,11 +247,8 @@
                         render: function(data, screen, record, index) {
                             var btnEdit =
                                 `<a href="{{ route('shippingUnit.edit') }}/${data}" class="link-control align-middle"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>`;
-                            var btnDelete = `<form action="{{ route('shippingUnit.delete') }}" method="POST">
-                                                @csrf
-                                                <a href="#" onclick="$(this).closest('form').submit();" class="link-control"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                                <input type="hidden" name="id" value="${data}">
-                                            </form>`;
+                            var btnDelete =
+                                `<button onclick="deleteModel(this)" class="link-control deleteRecord" data-id="${data}"><i class="fa fa-trash"  aria-hidden="true"></i></button>`;
 
                             return `<div class="text-center" >  ${btnEdit} ${btnDelete }</div>`
                         },
@@ -255,12 +279,57 @@
             return $table;
         }
 
+
         function convertNull(value) {
             if (typeof value !== 'undefined' && value) {
                 return value;
             };
             return '<i class="fa fa-times null-data" aria-hidden="true"></i>';
         }
+
+        // ajax send delete
+        function deleteModel(element) {
+            var result = confirm("Xác nhận xóa?");
+            if (result == false) {
+                return;
+            }
+            var id = $(element).data("id");
+            var token = $("meta[name='csrf-token']").attr("content");
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                url: "{{ route('shippingUnit.delete') }}/" + id,
+                type: 'DELETE',
+                data: {
+                    "id": id,
+                },
+                success: function(response) {
+                    console.log(response);
+                    console.log("it Works");
+                    alert('Xóa thành công')
+                    $table
+                        .row($(element).parents('tr'))
+                        .remove()
+                        .draw();
+                },
+                error: function(response) {
+                    console.log(response);
+                    alert('Xóa không thành công');
+
+                }
+
+            });
+
+        }
+        //
+        $(document).ready(function() {
+            $table = load_data();
+        });
         //end load_data
     </script>
 

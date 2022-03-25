@@ -1,7 +1,6 @@
 var btnAdd = document.querySelector("#btn-add");
 var btnSearch = document.querySelector("#btn-search");
 var btnAll = document.querySelector("#btn-all");
-var btnClearDate = document.querySelector("#btn-clear-date");
 var searchField = document.querySelector(".search-field");
 
 const listColumn = {
@@ -46,11 +45,7 @@ btnAll.addEventListener("click", () => {
     load_data();
 });
 
-btnClearDate.addEventListener('click',()=>{
-//filter_from_date
-    document.querySelector('input[name="filter_from_date"]').value=""
-    document.querySelector('input[name="filter_to_date"]').value=""
-})
+
 
 //filter data by name columns
 function filterData(nameCol, value) {
@@ -123,3 +118,4 @@ function rawHTML(index) {
 </div>`;
     return htmlRaw;
 }
+
