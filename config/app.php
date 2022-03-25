@@ -227,6 +227,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         // Datatables     
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
 
     ],
 

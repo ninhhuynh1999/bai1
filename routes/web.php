@@ -27,7 +27,7 @@ Route::get('/admin', 'AdminController@index')->name('admin.index');
 
 Route::get('/admin/model/create','ShippingUnitController@create')->name('shippingUnit.create');
 Route::get('admin/model/', 'ShippingUnitController@index')->name('shippingUnit.index');
-Route::get('admin/model/edit/{id}', 'ShippingUnitController@edit')->name('shippingUnit.edit');
+Route::get('admin/model/edit/{id?}', 'ShippingUnitController@edit')->name('shippingUnit.edit');
 Route::get('admin/model/getall', 'ShippingUnitController@getall')->name('shippingUnit.getall');
 
 Route::post('admin/model/store', 'ShippingUnitController@store')->name('shippingUnit.store');

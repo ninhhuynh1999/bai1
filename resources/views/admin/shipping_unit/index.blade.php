@@ -16,11 +16,22 @@
 @endsection
 
 @section('content')
-
     <div class="row">
+        <div class="col-md-1 pt-2">
+            <div class="btn-filter">
+                <a href="{{ route('shippingUnit.create') }}">
+                        
+                    <button class="btn btn-info form-control" id="btn-add-shipping-unit">
+                      
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Tạo mới ĐVVC
+                    </button>
+                </a>
+            </div>
+        </div>
         <div class="col-md-2">
             <div class="form-group">
-                <label for="">Lọc</label>
+                <label for="">Lọc theo</label>
                 <select name="filter_date_option" class="form-control select2" style="width: 100%;">
                     <option value="created_at" selected class="selected">Ngày tạo</option>
                     <option value="updated_at" class="">Ngày sửa</option>
@@ -62,9 +73,7 @@
                         Tất cả
                     </button>
                 </div>
-
             </div>
-
         </div>
     </div>
     <form id="filter-form" onsubmit="this.preventDefault()">
@@ -132,13 +141,11 @@
     <script>
         // add event onLoad to windows 
         $(document).ready(function() {
-
             $table = load_data();
         });
         //end window eventListener
 
-
-        function load_data(from_date = '',to_date='',optionDate='') {
+        function load_data(from_date = '', to_date = '', optionDate = '') {
 
             $table = $('#shipping-table').DataTable({
                 processing: true,
@@ -146,13 +153,13 @@
                 destroy: true,
                 lengthMenu: [20, 40, 60, 80, 100],
                 ajax: {
-                    url: "{{ route("shippingUnit.getall") }}",
-                    data: {
+                    'url': '{{ route('shippingUnit.getall') }}',
+                    'data': {
                         from_date: from_date,
                         to_date: to_date,
                         optionDate: optionDate
                     },
-                    method:'get'
+                    'method': 'get'
                 },
                 columnDefs: [{
                         data: 'id',
@@ -164,21 +171,23 @@
                     {
                         data: 'name',
                         render: function(data, screen, record, index) {
-                            return `<div> ${data} <br> ${record.bankName  } </div>`;
+                            return `<div> ${data} <br> ${convertNull(record.bankName)  } </div>`;
                         },
                         targets: 1
                     },
                     {
                         data: 'shortName',
                         render: function(data, screen, record, index) {
-                            return `<div> ${data} <br> ${record.bankNumber} </div>`;
+                            record.bankNumber = record.bankNumber ? record.bankNumber :
+                                '<i class="fa fa-times null-data" aria-hidden="true"></i>';
+                            return `<div> ${data} <br> ${convertNull(record.bankNumber) } </div>`;
                         },
                         targets: 2
                     },
                     {
                         data: 'taxId',
                         render: function(data, screen, record, index) {
-                            return `<div> ${data} <br> ${record.phoneNumber} </div>`;
+                            return `<div> ${convertNull(data) } <br> ${convertNull(record.phoneNumber) } </div>`;
                         },
                         targets: 3
                     },
@@ -186,19 +195,19 @@
                     {
                         data: 'note',
                         render: function(data, screen, record, index) {
-                            return `<div> ${data} </div>`;
+                            return `<div> ${ convertNull(data)} </div>`;
                         },
                         targets: 4
                     },
                     {
                         data: 'address',
                         render: function(data, screen, record, index) {
-                            return `<div> ${data} <br> ${record.contact}  </div>`
+                            return `<div> ${convertNull(data)} <br> ${convertNull(record.contact)}  </div>`
                         },
                         targets: 5
                     },
                     {
-                        data: 'created_by',
+                        data: 'status_id',
                         render: function(data, screen, record, index) {
                             return `<div> <b>${record.status.name}</b> <br>${record.created_by.name}: ${record.created_at} <br> ${record.updated_by.name} : ${record.updated_at} </div>`
                         },
@@ -206,10 +215,11 @@
                     },
                     {
                         class: 'align-middle',
+
                         data: 'id',
                         render: function(data, screen, record, index) {
                             var btnEdit =
-                                `<a href="{{ url('/admin/shipping-unit/edit') }}/${data}" class="link-control align-middle"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>`;
+                                `<a href="{{ route('shippingUnit.edit') }}/${data}" class="link-control align-middle"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>`;
                             var btnDelete = `<form action="{{ route('shippingUnit.delete') }}" method="POST">
                                                 @csrf
                                                 <a href="#" onclick="$(this).closest('form').submit();" class="link-control"><i class="fa fa-trash" aria-hidden="true"></i></a>
@@ -219,27 +229,38 @@
                             return `<div class="text-center" >  ${btnEdit} ${btnDelete }</div>`
                         },
                         targets: 7
-                    }
+                    },
+                    {
+                        "searchable": false,
+                        "orderable": false,
+                        "targets": [7]
+                    },
 
                 ], //end columnDefs
                 language: {
                     "lengthMenu": "Hiển thị _MENU_ hàng trong trang",
                     "zeroRecords": "Không tìm thấy dữ liệu",
-                    "info": "Hiển thị trang thứ _PAGE_ trong _PAGES_ trang",
+                    "info": "Hiển thị dữ liệu từ _START_ đến _END_ trong tổng _TOTAL_",
                     "infoEmpty": "No records available",
-                    "infoFiltered": "(filtered from _MAX_ total records)",
+                    "infoFiltered": "(Được lọc từ _MAX_ dòng)",
                     "paginate": {
                         "next": "Trang sau",
                         'previous': 'Trang trước'
                     }
                 },
+
                 // "bFilter": false,
             });
             //end $table
             return $table;
         }
 
-
+        function convertNull(value) {
+            if (typeof value !== 'undefined' && value) {
+                return value;
+            };
+            return '<i class="fa fa-times null-data" aria-hidden="true"></i>';
+        }
         //end load_data
     </script>
 

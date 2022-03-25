@@ -21,5 +21,7 @@ $factory->define(ShippingUnit::class, function (Faker $faker) {
         'note' => $faker->text(200),
         'created_by' => $faker->numberBetween(1, 4),
         'updated_by' => $faker->numberBetween(1, 4),
+        'created_at'=>$faker->dateTimeBetween('-2 months','+1 months'),
+        'updated_at'=>$faker->dateTimeBetween('-2 months','+1 months'),
     ];
 });

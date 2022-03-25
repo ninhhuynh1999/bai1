@@ -101,3 +101,12 @@ form>a>i{
 button.btn{
     font-weight: bold;
 }
+
+i.null-data{
+    color: red;
+
+}
+
+.pt-2{
+    padding-top: 2.5rem;
+}

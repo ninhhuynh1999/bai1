@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@yield('title')</title>
+
+
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -35,7 +37,7 @@
     {{-- Datatable --}}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 
-
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -144,12 +146,12 @@
                             {{-- <small class="label pull-right bg-green">new</small> --}}
                         </a>
                     </li>
-                    <li class="treeview">
+                    <li class="treeview active">
                         <a href="#">
                             <i class="fa fa-dashboard"></i> <span>Đơn vị vận chuyển</span> <i
                                 class="fa fa-angle-left pull-right"></i>
                         </a>
-                        <ul class="treeview-menu">
+                        <ul class="treeview-menu active menu-open">
                             <li class=""><a href="{{ route('shippingUnit.create') }}"><i
                                         class="fa fa-circle-o"></i> Thêm mới</a></li>
                             <li><a href="{{ route('shippingUnit.index') }}"><i class="fa fa-circle-o"></i> Danh mục

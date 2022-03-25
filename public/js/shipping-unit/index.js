@@ -1,6 +1,7 @@
 var btnAdd = document.querySelector("#btn-add");
 var btnSearch = document.querySelector("#btn-search");
 var btnAll = document.querySelector("#btn-all");
+var btnClearDate = document.querySelector("#btn-clear-date");
 var searchField = document.querySelector(".search-field");
 
 const listColumn = {
@@ -23,13 +24,10 @@ btnSearch.addEventListener("click", () => {
     var to_date = $("input[name='filter_to_date']").val();
     var optionDate = $("select[name='filter_date_option']").val();
 
-
-    
-    console.log(from_date + "-" + to_date+'-'+optionDate);
-    var table = load_data(from_date,to_date,optionDate);
+    console.log(from_date + "-" + to_date + "-" + optionDate);
+    var table = load_data(from_date, to_date, optionDate);
 
     for (let index = 0; index < dataForm.length; index += 2) {
-
         filterData(dataForm[index]["value"], dataForm[index + 1]["value"]);
     }
 });
@@ -48,15 +46,20 @@ btnAll.addEventListener("click", () => {
     load_data();
 });
 
+btnClearDate.addEventListener('click',()=>{
+//filter_from_date
+    document.querySelector('input[name="filter_from_date"]').value=""
+    document.querySelector('input[name="filter_to_date"]').value=""
+})
+
 //filter data by name columns
 function filterData(nameCol, value) {
     var indexCol = listColumn[nameCol];
-    if(value){
-            console.log(indexCol + "-" + value);
+    if (value) {
+        console.log(indexCol + "-" + value);
 
-    $table.columns(indexCol).search(value).draw();
+        $table.columns(indexCol).search(value).draw();
     }
-
 }
 
 //add row filter
