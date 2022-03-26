@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('title', 'TẠO ĐƠN VỊ VẬN CHUYỂN')
-
 @section('content-header')
     <h1>
         CHỈNH SỬA ĐƠN VỊ VẬN CHUYỂN
@@ -89,12 +88,9 @@
                         @isset($statusList)
                             @foreach ($statusList as $status)
                                 <option value="{{ $status->id }}"
-                                    @if (old('status_id')) 
-                                        {{ $status->id === old('status_id') ? 'selected' : '' }}
+                                    @if (!empty(old('status_id'))) {{ $status->id === old('status_id') ? 'selected' : '' }}
                                     @else
-                                    {{ $status->id === $model->status_id ? 'selected' : '' }} 
-                                    @endif
-                                    >
+                                    {{ $status->id === $model->status_id ? 'selected' : '' }} @endif>
                                     {{ $status->name }}</option>
                             @endforeach
                         @endisset
@@ -170,7 +166,10 @@
         </div>
         <div class="row">
             <div class="col-lg-2">
-                <a href="{{ route('shippingUnit.index') }}">
+                <a
+                    href="@if (url()->previous() == url()->current()) {{ route('shippingUnit.index') }}
+                    @else
+                    {{ url()->previous() }} @endif">
                     <button type="button" class="btn btn-block btn-warning btn-lg">Trở lại</button>
                 </a>
             </div>

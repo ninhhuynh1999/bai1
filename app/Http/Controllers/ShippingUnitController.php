@@ -6,6 +6,7 @@ use App\Http\Requests\CreateShippingUnitRequest;
 use App\Http\Requests\EditSphippingUnitRequest;
 use App\ShippingUnit;
 use App\StatusShippingUnit;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
@@ -14,7 +15,7 @@ class ShippingUnitController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('auth');
+        $this->middleware('auth');
     }
 
 
@@ -57,7 +58,6 @@ class ShippingUnitController extends Controller
 
     public function edit(int $id)
     {
- 
 
         $shippingUnit = ShippingUnit::find($id);
         $statusList = StatusShippingUnit::all();
@@ -69,12 +69,12 @@ class ShippingUnitController extends Controller
     public function update(EditSphippingUnitRequest $request)
     {
 
-
         try {
             $shippingUnit = ShippingUnit::findOrFail($request->id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $th) {
             return back()->with('fail', 'Lỗi không tìm thấy ID');
         }
+
         $shippingUnit->name = $request->name;
         $shippingUnit->phoneNumber = $request->phoneNumber;
         $shippingUnit->shortName = $request->shortName;
@@ -93,49 +93,82 @@ class ShippingUnitController extends Controller
         return back()->with('success', 'Cập nhật thành công');
     }
 
-    public function delete(Request $request, int $id)
+    public function delete(Request $request)
     {
 
-        if ($id != $request->id) {
-            return response()->json([
-                'fail' => 'Dữ liệu không đồng nhất!'
-            ], 400);
-        }
         try {
-            $shippingUnit = ShippingUnit::findOrFail($id);
+            $shippingUnit = ShippingUnit::findOrFail($request->id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $th) {
             return response()->json([
                 'fail' => 'Không tìm thấy dữ liệu tương ứng với ID!'
             ], 204);
         }
 
-
-        if (!Auth::check()) {
-            return response()->json([
-                'fail' => 'Bạn không có quyền để xóa (Unauthorized)'
-            ], 401);
-        }
-
         $result = $shippingUnit->delete();
         // return back()->with('success', 'Xóa ĐVVC thành công');
         return response()->json([
-            'success' => 'Xóa thành công ĐVVC mã ' . $id . '!'
+            'success' => 'Xóa thành công ĐVVC mã ' . $request->id . '!'
         ], 200);
     }
 
     public function getAll(Request $request)
     {
         $targetColumn = ['created_at', 'updated_at'];
-        if (!empty($request->from_date)) {
-            $data = ShippingUnit::with('status', 'created_by', 'updated_by')
-                ->whereBetween($request->optionDate, [$request->from_date, $request->to_date])
-                ->get();
-        } else {
-            $data = ShippingUnit::with('status', 'created_by', 'updated_by')->get();
-        }
+        $fromDate = $this->convertDate($request->from_date, 'begin');
+        $toDate = $this->convertDate($request->to_date, 'end');
+        $column = $request->column_date;
+        $data = $this->getDataByDateBetween($column, $fromDate, $toDate);
         return DataTables::of($data)->make(true);
-        return view('home');
     }
 
+    /**
+     * Chuyển thời gian sang mysql
+     *
+     * @param string|null $value Chuỗi thời gian
+     * @param string $option Chuỗi xác định thời gian 'begin': startOfDay, 'end':'endOfDay'
+     *                 
+     * @return string
+     */
+    private function convertDate(?string $value, string $option)
+    {
+        if (!Carbon::hasFormat($value, 'd/m/Y')) {
+            return '';
+        }
+        if (empty($value) || is_null($value)) {
+            return '';
+        }
+        if ($option == 'begin') {
 
+            return Carbon::createFromFormat('d/m/Y', $value)->startOfDay();
+        }
+        if ($option == 'end') {
+
+            return Carbon::createFromFormat('d/m/Y', $value)->endOfDay();
+        }
+    }
+
+    private function getDataByDateBetween(?string $column, ?string $fromDate, ?string  $toDate)
+    {
+
+        if (empty($fromDate) && empty($toDate)) {
+            $data = ShippingUnit::with('status', 'created_by', 'updated_by')->get();
+        }
+        if (!empty($fromDate) && !empty($toDate)) {
+            $data = ShippingUnit::with('status', 'created_by', 'updated_by')
+                ->whereBetween($column, [$fromDate, $toDate])
+                ->get();
+        }
+
+        if (!empty($fromDate) && empty($toDate)) {
+            $data = ShippingUnit::with('status', 'created_by', 'updated_by')
+                ->whereBetween($column, [$fromDate, Carbon::today()->endOfDay()])
+                ->get();
+        }
+        if (empty($fromDate) && !empty($toDate)) {
+            $data = ShippingUnit::with('status', 'created_by', 'updated_by')
+                ->whereBetween($column, [Carbon::today()->startOfDay(), $toDate])
+                ->get();
+        }
+        return $data;
+    }
 }

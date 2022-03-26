@@ -36,10 +36,4 @@ Route::delete('admin/model/delete/{id?}', 'ShippingUnitController@delete')->name
 
 
 
-//datatables
-Route::get('datatables','DatatablesController@getIndex')->name('datatables.index');
-Route::get('datatables/anyData','DatatablesController@anyData')->name('datatables.data');
-Route::get('datatables/index','DatatablesController@index')->name('datatables.index2');
 
-// Route::get('datatables/getall','DatatablesController@getAll')->name('datatables.getall');
-Route::get('datatables/filter','DatatablesController@filter')->name('datatables.filter');

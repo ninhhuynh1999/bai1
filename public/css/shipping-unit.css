@@ -94,8 +94,8 @@ td {
     }
 }
 
-input, select, textarea{
-    border-radius: 5px !important;
+input.form-control,select.form-control, select.form-control, textarea.form-control{
+    border-radius: 5px ;
 }
 
 form>a>i{
@@ -161,6 +161,10 @@ i.null-data{
       position: relative;
       right: -15%;
       z-index: 20;
+  }
+  .input-group-addon{
+      border-top-left-radius:5px !important;
+      border-bottom-left-radius:5px !important;
   }
 
 /* end index page */

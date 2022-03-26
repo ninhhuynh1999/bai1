@@ -51,16 +51,43 @@
             </div>
         </div>
         <div class="col-md-2">
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="">Từ ngày</label>
                 <input name="filter_from_date" id="filter-from-date" class="form-control" type="date"
                     id="input-from-date">
+
+
+            </div> --}}
+
+            <div class="form-group">
+                <label>Từ ngày</label>
+
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="text" autocomplete="off" class="form-control pull-right" data-date-format="dd/mm/yyyy"
+                        name="filter_from_date" id="filter-from-date">
+                </div>
+                <!-- /.input group -->
             </div>
         </div>
         <div class="col-md-2">
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="">Đến ngày</label>
                 <input name="filter_to_date" id="input-to-date" class="form-control" type="date">
+            </div> --}}
+            <div class="form-group">
+                <label>Đến ngày</label>
+
+                <div class="input-group">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="text" autocomplete="off" class="form-control pull-right" data-date-format="dd/mm/yyyy"
+                        name="filter_to_date" id="input-to-date">
+                </div>
+                <!-- /.input group -->
             </div>
         </div>
         <div class="col-md-4">
@@ -168,11 +195,21 @@
 
 @section('js')
     <script type="text/javascript">
-        // add event onLoad to windows 
+        // Config datepicker
+        $(function() {
+            $('#filter-from-date').datepicker({
+                todayBtn: true,
+                todayHighlight: true
+            });
+            $('#input-to-date').datepicker({
+                todayBtn: true,
+                todayHighlight: true
+            });
+        });
 
-        //end window eventListener
 
-        function load_data(from_date = '', to_date = '', optionDate = '') {
+        // function to create table
+        function loadData(from_date = '', to_date = '', column_date = '') {
 
             $table = $('#shipping-table').DataTable({
                 processing: true,
@@ -184,7 +221,7 @@
                     'data': {
                         from_date: from_date,
                         to_date: to_date,
-                        optionDate: optionDate
+                        column_date: column_date
                     },
                     'method': 'get'
                 },
@@ -236,7 +273,7 @@
                     {
                         data: 'status_id',
                         render: function(data, screen, record, index) {
-                            return `<div> <b>${record.status.name}</b> <br>${record.created_by.name}: ${record.created_at} <br> ${record.updated_by.name} : ${record.updated_at} </div>`
+                            return `<div> <b>${record.status.name}</b> <br>${record.created_by.name}(Tạo): ${record.created_at} <br> ${record.updated_by.name}(Sửa) : ${record.updated_at} </div>`
                         },
                         targets: 6
                     },
@@ -278,6 +315,7 @@
             //end $table
             return $table;
         }
+        //end loadData()
 
 
         function convertNull(value) {
@@ -287,7 +325,7 @@
             return '<i class="fa fa-times null-data" aria-hidden="true"></i>';
         }
 
-        // ajax send delete
+        // ajax send delete model
         function deleteModel(element) {
             var result = confirm("Xác nhận xóa?");
             if (result == false) {
@@ -326,11 +364,11 @@
             });
 
         }
-        //
+
+        // create datatable on first load
         $(document).ready(function() {
-            $table = load_data();
+            $table = loadData();
         });
-        //end load_data
     </script>
 
     {{-- import js --}}

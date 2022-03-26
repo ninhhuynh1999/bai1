@@ -24,7 +24,7 @@ btnSearch.addEventListener("click", () => {
     var optionDate = $("select[name='filter_date_option']").val();
 
     console.log(from_date + "-" + to_date + "-" + optionDate);
-    var table = load_data(from_date, to_date, optionDate);
+    var table = loadData(from_date, to_date, optionDate);
 
     for (let index = 0; index < dataForm.length; index += 2) {
         filterData(dataForm[index]["value"], dataForm[index + 1]["value"]);
@@ -33,19 +33,10 @@ btnSearch.addEventListener("click", () => {
 
 //remove all filter and get all data
 btnAll.addEventListener("click", () => {
-    // var buttonHidden = $(".btn-hidden");
-
-    // for (let index = 0; index < buttonHidden.length; index++) {
-    //     hiddenRow(buttonHidden[index]);
-    // }
-    // $table.search("").draw();
-
     $("#shipping_table").DataTable().destroy();
     $(".search-field .row").remove();
-    load_data();
+    loadData();
 });
-
-
 
 //filter data by name columns
 function filterData(nameCol, value) {
@@ -118,4 +109,3 @@ function rawHTML(index) {
 </div>`;
     return htmlRaw;
 }
-
